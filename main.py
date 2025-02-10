@@ -25,9 +25,9 @@ window_size = (300, 400)
 
 
 screen = pygame.display.set_mode(window_size)
-pygame.display.set_caption('Unblock Red Car')
+pygame.display.set_caption('Unblock Car')
 
-background = pygame.image.load(os.path.join('images', 'bbg.png'))
+background = pygame.image.load(os.path.join('images', 'pitch.png'))
 background = pygame.transform.scale(background, window_size)
 
 BUTTONS1 = pygame.image.load("images/restart.png") 
@@ -43,7 +43,7 @@ class Button:
     def __init__(self,x,y,img):
         self.x=x
         self.y=y
-        self.img=pygame.transform.scale(img,(30,30))
+        self.img=pygame.transform.scale(img,(35,35))
         self.draw()
         self.rect=self.img.get_rect()
         self.rect.x=self.x
@@ -68,7 +68,7 @@ def load_stage(stage):
     
 
 stages = ast.literal_eval(open('stages.json').read())
-last_stage = open('laststage').read()
+last_stage = open('Level').read()
 
 load_stage(last_stage)
 
@@ -122,13 +122,13 @@ while run:
                             if draging_car.is_main:
                                 if last_stage == str(len(stages) - 1):
                                     messagebox.showinfo('won', 'you won the game.\nGame Over ! Thank you for playing.')
-                                    with open('laststage', 'w') as laststage_file:
+                                    with open('Level', 'w') as laststage_file:
                                         laststage_file.write('1')
                                         laststage_file.close()
                                     pygame.quit()
                                 else:
                                     last_stage = str(int(last_stage) + 1)
-                                    with open('laststage', 'w') as laststage_file:
+                                    with open('Level', 'w') as laststage_file:
                                         laststage_file.write(last_stage)
                                         laststage_file.close()
                                     Car.cars.clear()
@@ -183,6 +183,6 @@ while run:
     
     # put cars in parking
     for car in Car.cars: car.show(screen)
-    restart_button = Button(138,340,BUTTONS1)
-    end_button = Button(223,340,BUTTONS2)
+    restart_button = Button(18,342,BUTTONS1)
+    end_button = Button(257,342,BUTTONS2)
     pygame.display.flip()

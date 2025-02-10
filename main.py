@@ -74,8 +74,7 @@ load_stage(last_stage)
 
 run=True
 while run:
-    mouse_position = pygame.mouse.get_pos()
-    print(mouse_position)
+
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
@@ -122,15 +121,15 @@ while run:
                             if draging_car.is_main:
                                 if last_stage == str(len(stages) - 1):
                                     messagebox.showinfo('won', 'you won the game.\nGame Over ! Thank you for playing.')
-                                    with open('Level', 'w') as laststage_file:
-                                        laststage_file.write('1')
-                                        laststage_file.close()
+                                    with open('Level', 'w') as Level_file:
+                                        Level_file.write('1')
+                                        Level_file.close()
                                     pygame.quit()
                                 else:
                                     last_stage = str(int(last_stage) + 1)
-                                    with open('Level', 'w') as laststage_file:
-                                        laststage_file.write(last_stage)
-                                        laststage_file.close()
+                                    with open('Level', 'w') as Level_file:
+                                        Level_file.write(last_stage)
+                                        Level_file.close()
                                     Car.cars.clear()
                                     r = messagebox.askquestion("won","you won the game ! next stage ?")
                                     if r == 'no':
@@ -158,7 +157,7 @@ while run:
                         if rounded_y >= 200: rect_y = 200
                         else: rect_y = rounded_y
                 draging_car.rect.y = rect_y
-
+ 
 
                 draging_car = None
 
@@ -172,6 +171,15 @@ while run:
                 mouse_x, mouse_y = event.pos
                 new_y = mouse_y + offset_y
                 new_x = mouse_x + offset_x
+                if new_x < 0:
+                    new_x = 0
+                elif new_x + draging_car.rect.width > 300:
+                    new_x = window_size[0] - draging_car.rect.width
+
+                if new_y < 0:
+                    new_y = 0
+                elif new_y + draging_car.rect.height > 300:
+                    new_y = window_size[1] - draging_car.rect.height
 
                 draging_car.move(new_x, new_y)
 

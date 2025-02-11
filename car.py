@@ -5,10 +5,10 @@ import pygame
 class Car:
 
     __cars_img = {
-        (100, 50): '3.png',
-        (150, 50): 'obs2.png',
-        (50, 100): 'obs33.png',
-        (50, 150): 'bus.png',
+        (200, 100): 'whitecar.png',
+        (300, 100): 'yellowcar.png',
+        (100, 200): 'greencar.png',
+        (100, 300): 'bus.png',
     }
 
     __SPEED_LIMIT = 50
@@ -16,7 +16,7 @@ class Car:
     cars = []
 
     def __init__(self, x, y, width, height):
-        if y == 100 and height == 50:
+        if y == 100*2 and height == 50*2:
             self.is_main = True
             img = os.path.join('images', 'main.png')
         else:

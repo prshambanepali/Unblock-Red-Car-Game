@@ -21,11 +21,11 @@ Tk().wm_withdraw()
 pygame.init()
 
 
-window_size = (300, 400)
+window_size = (600, 800)
 
 
 screen = pygame.display.set_mode(window_size)
-pygame.display.set_caption('Unblock Car')
+pygame.display.set_caption('Unblock Red Car')
 
 background = pygame.image.load(os.path.join('images', 'pitch.png'))
 background = pygame.transform.scale(background, window_size)
@@ -34,16 +34,13 @@ BUTTONS1 = pygame.image.load("images/restart.png")
 BUTTONS2 = pygame.image.load("images/exit.png")
 
 
-
-
-
 draging_car = None
 
 class Button:
     def __init__(self,x,y,img):
         self.x=x
         self.y=y
-        self.img=pygame.transform.scale(img,(35,35))
+        self.img=pygame.transform.scale(img,(70,70))
         self.draw()
         self.rect=self.img.get_rect()
         self.rect.x=self.x
@@ -63,7 +60,7 @@ class Button:
 def load_stage(stage):
     cars = []
     for x, y, width, height in stages[stage]:
-        car = Car(x, y, width, height)
+        car = Car(x*2, y*2, width*2, height*2)
         cars.append(car)
     
 
@@ -110,14 +107,14 @@ while run:
                 rect_w = draging_car.rect.width
                 if rect_x <= 0: rect_x = 0
                 else:
-                    if rect_w == 150:
-                        if rounded_x >= 150: rect_x = 150
+                    if rect_w == 150*2:
+                        if rounded_x >= 150*2: rect_x = 150*2
                         else: rect_x = rounded_x
-                    elif rect_w == 50:
-                        if rounded_x >= 250: rect_x = 250
+                    elif rect_w == 50*2:
+                        if rounded_x >= 250*2: rect_x = 250*2
                         else: rect_x = rounded_x
-                    elif rect_w == 100:
-                        if rounded_x >= 200:
+                    elif rect_w == 100*2:
+                        if rounded_x >= 200*2:
                             if draging_car.is_main:
                                 if last_stage == str(len(stages) - 1):
                                     messagebox.showinfo('won', 'you won the game.\nGame Over ! Thank you for playing.')
@@ -134,10 +131,13 @@ while run:
                                     r = messagebox.askquestion("won","you won the game ! next stage ?")
                                     if r == 'no':
                                         pygame.quit()
+                                    elif r == 'yes' and last_stage=='11':
+                                        messagebox.showinfo('Won!', 'you won the game. Thank you for playing.')
+                                        pygame.quit()
                                     for x, y, width, height in stages[last_stage]:
-                                        Car(x, y, width, height)
+                                        Car(x*2, y*2, width*2, height*2)
                             else:
-                                rect_x = 200
+                                rect_x = 200*2
                         else: rect_x = rounded_x
                 draging_car.rect.x = rect_x
 
@@ -147,14 +147,14 @@ while run:
                 rect_h = draging_car.rect.height
                 if rect_y <= 0: rect_y = 0
                 else:
-                    if rect_h == 150:
-                        if rounded_y >= 150: rect_y = 150
+                    if rect_h == 150*2:
+                        if rounded_y >= 150*2: rect_y = 150*2
                         else: rect_y = rounded_y
-                    elif rect_h == 50:
-                        if rounded_y >= 250: rect_y = 250
+                    elif rect_h == 50*2:
+                        if rounded_y >= 250*2: rect_y = 250*2
                         else: rect_y = rounded_y
-                    elif rect_h == 100:
-                        if rounded_y >= 200: rect_y = 200
+                    elif rect_h == 100*2:
+                        if rounded_y >= 200*2: rect_y = 200*2
                         else: rect_y = rounded_y
                 draging_car.rect.y = rect_y
  
@@ -173,12 +173,12 @@ while run:
                 new_x = mouse_x + offset_x
                 if new_x < 0:
                     new_x = 0
-                elif new_x + draging_car.rect.width > 300:
+                elif new_x + draging_car.rect.width > 300*2:
                     new_x = window_size[0] - draging_car.rect.width
 
                 if new_y < 0:
                     new_y = 0
-                elif new_y + draging_car.rect.height > 300:
+                elif new_y + draging_car.rect.height > 300*2:
                     new_y = window_size[1] - draging_car.rect.height
 
                 draging_car.move(new_x, new_y)
@@ -191,6 +191,6 @@ while run:
     
     # put cars in parking
     for car in Car.cars: car.show(screen)
-    restart_button = Button(18,342,BUTTONS1)
-    end_button = Button(257,342,BUTTONS2)
+    restart_button = Button(18*2,342*2,BUTTONS1)
+    end_button = Button(257*2,342*2,BUTTONS2)
     pygame.display.flip()
